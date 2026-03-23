@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "inboxkit",
+  "main": "./src/index.ts",
+  "compatibility_date": "2025-07-09",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "observability": {
+    "enabled": true
+  }
+
+  // Phase 2: Add D1 for email metadata
+  // "d1_databases": [
+  //   {
+  //     "binding": "DB",
+  //     "database_name": "inboxkit",
+  //     "database_id": "<create with: wrangler d1 create inboxkit>"
+  //   }
+  // ],
+
+  // Phase 2: Add R2 for email body + attachment storage
+  // "r2_buckets": [
+  //   {
+  //     "binding": "STORAGE",
+  //     "bucket_name": "inboxkit-emails"
+  //   }
+  // ]
+}
