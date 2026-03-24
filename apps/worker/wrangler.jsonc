@@ -8,18 +8,18 @@
   ],
   "observability": {
     "enabled": true
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "inboxkit",
+      // Replace after: wrangler d1 create inboxkit
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "./migrations"
+    }
+  ]
 
-  // Phase 2: Add D1 for email metadata
-  // "d1_databases": [
-  //   {
-  //     "binding": "DB",
-  //     "database_name": "inboxkit",
-  //     "database_id": "<create with: wrangler d1 create inboxkit>"
-  //   }
-  // ],
-
-  // Phase 2: Add R2 for email body + attachment storage
+  // Phase 3: Add R2 for email body + attachment storage
   // "r2_buckets": [
   //   {
   //     "binding": "STORAGE",
