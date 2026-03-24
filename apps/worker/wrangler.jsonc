@@ -17,13 +17,11 @@
       "database_id": "00000000-0000-0000-0000-000000000000",
       "migrations_dir": "./migrations"
     }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "STORAGE",
+      "bucket_name": "inboxkit-emails"
+    }
   ]
-
-  // Phase 3: Add R2 for email body + attachment storage
-  // "r2_buckets": [
-  //   {
-  //     "binding": "STORAGE",
-  //     "bucket_name": "inboxkit-emails"
-  //   }
-  // ]
 }

@@ -81,5 +81,60 @@ export const createApp = () => {
     return c.body(null, 204);
   });
 
+  // -- Messages --
+
+  app.get("/api/inboxes/:id/messages", async (c) => {
+    const { id } = c.req.param();
+
+    const inbox = await c.env.DB.prepare("SELECT id FROM inboxes WHERE id = ?")
+      .bind(id)
+      .first();
+    if (!inbox) {
+      return c.json({ error: "Not found" }, 404);
+    }
+
+    const result = await c.env.DB.prepare(
+      "SELECT id, inbox_id, from_address, from_name, subject, raw_size, received_at FROM messages WHERE inbox_id = ? ORDER BY received_at DESC"
+    )
+      .bind(id)
+      .all();
+    return c.json(result.results);
+  });
+
+  app.get("/api/messages/:id", async (c) => {
+    const { id } = c.req.param();
+    const message = await c.env.DB.prepare("SELECT * FROM messages WHERE id = ?")
+      .bind(id)
+      .first();
+    if (!message) {
+      return c.json({ error: "Not found" }, 404);
+    }
+    return c.json(message);
+  });
+
+  app.get("/api/messages/:id/raw", async (c) => {
+    const { id } = c.req.param();
+    const message = await c.env.DB.prepare(
+      "SELECT raw_key FROM messages WHERE id = ?"
+    )
+      .bind(id)
+      .first<{ raw_key: string }>();
+    if (!message) {
+      return c.json({ error: "Not found" }, 404);
+    }
+
+    const object = await c.env.STORAGE.get(message.raw_key);
+    if (!object) {
+      return c.json({ error: "Raw email not found in storage" }, 404);
+    }
+
+    return new Response(object.body, {
+      headers: {
+        "Content-Type": "message/rfc822",
+        "Content-Disposition": `attachment; filename="${id}.eml"`,
+      },
+    });
+  });
+
   return app;
 };

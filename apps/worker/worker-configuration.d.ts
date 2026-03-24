@@ -4,7 +4,5 @@
 
 interface Env {
   DB: D1Database;
-
-  // Phase 3:
-  // STORAGE: R2Bucket;
+  STORAGE: R2Bucket;
 }
